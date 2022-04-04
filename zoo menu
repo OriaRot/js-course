@@ -1,0 +1,175 @@
+let txt1 = "Dog12, CAT3, LiOn7, DolphiN11, fish6,"; 
+let txt2 = "PIG17, bear29, BiRd8,";
+let txt3 = "SNAKE39, donkey14"; 
+let txt = txt1.concat(txt2);
+txt = txt.concat(txt3);
+let animalArr = txt.split(',');
+animalArr = animalArr.map(element => {
+    return element.toLowerCase().trim();
+})
+let code_to_delete;
+let animalCode;
+let anml, animal;
+let new_animal;
+let new_animal_code;
+let menu = prompt(`Welcome to the zoo's database,
+Please select an option:
+[1]-Animal Search by code
+[2]-Animal search by name
+[3]-add new animal to the database
+[4]-delete animal from database
+[5]-exit`)
+
+let animal_search;
+//_________________________________________________
+function get_animal_index(code){
+    for(i of animalArr){
+        if(i.includes(code)){
+           return animalArr.indexOf(i);
+        }
+    }
+}
+//_______________________________________________________
+
+function animal_name_only(name){
+
+    for(i=0; i<anml.length;i++){
+            if(anml[i]==name[0]){
+             animal = anml.slice(0,i);
+             if(name[0]==name[1]){
+                animal = anml.slice(0,i-1);
+             }
+         }
+     }
+ return animal;
+}
+
+//_________________________-this function search animals by their code-___________;
+function getAnimalByCode(){
+    let res;
+    if(Boolean(anml)==false){
+        res = 'Enter invalid code';
+        return res;
+    }
+    if(/\d/.test(anml[anml.length-2])) {
+        res = (anml.includes(animalCode[0])&&anml.includes(animalCode[1])? `Animal code is:${animalCode}
+Animal name is:${animal_name_only(animalCode)}` : 'No animal found please search again.');
+    return res;
+        }
+     if(/\d/.test(anml[anml.length-3])) {
+        res = (anml.includes(animalCode[0])&&anml.includes(animalCode[1]&&anml.includes(animalCode[2]))? `Animal code is:${animalCode}
+Animal name is:${animal_name_only(animalCode)}` : 'No animal found please search again.');
+    return res;
+              }
+      else {  res = (anml.includes(animalCode)? `Animal code is:${animalCode}
+Animal name is:${animal_name_only(animalCode)}` : 'No animal found please search again.');
+    return res;
+        }
+} 
+ 
+
+//_________________________-this function search animals by their name-___________;
+
+function search_animals(){
+    let res=[], cnt =0;
+    animal_search = animal_search.toLowerCase()
+    for(i of animalArr){
+         if(i.includes(animal_search)) { 
+             res[cnt] = i;
+             cnt++;
+         }
+         if(i.includes(animal_search)==false&&res==[]){
+            res = `no animal was found by the search of
+             
+                     ${animal_search}`
+         }
+        }
+        return res;
+}
+
+//_______________________________________-this function add new animals-__________________________
+function add_new_animal(){
+    let cnt = 0;
+    if(new_animal.length==0){
+        return'pleae enter an animal you want to add'
+    }
+    if(new_animal_code.length>3){
+        return console.log('please enter a shorter code');
+    }
+    if(/\d/.test(new_animal_code)==false||new_animal_code.length==0){
+        return 'please enter code'
+    }
+    if(/\d/.test(new_animal)){
+        return 'Please enter the name of the animal in the designated location and her code in the designated location'
+    }
+   for(i in animalArr){
+       if(animalArr[i].includes(new_animal)||animalArr[i].includes(new_animal_code)){
+        return`this animal alredy exists in our zoo:
+         
+           ${animalArr[cnt]}.`
+       }
+       if(animalArr[i].includes(new_animal)==false&&animalArr[i].includes(new_animal_code)==false){
+        cnt++
+       }
+   }
+   if(cnt == animalArr.length&&/\d/.test(new_animal_code)){ 
+       animalArr.push(new_animal);
+       animalArr[animalArr.length-1] = animalArr[animalArr.length-1]+new_animal_code
+   return animalArr
+   }
+   else{
+       return 'The system does not recognize the code / animal. Please enter a new animal and code'
+   }
+} 
+
+//_______________________________________-this function delete animals-__________________________
+
+function delete_animal(){
+    if(!/\d/.test(code_to_delete)){
+        return 'enter invalid code'
+    }
+    for(i in animalArr){
+        if(animalArr[i].includes(code_to_delete)){
+            delete animalArr[i]
+        }
+    }
+    return animalArr;
+}
+
+
+while(menu!=5){
+    if(menu==1){
+         animalCode = prompt(`Enter the code of the animal
+you want to search for:`);
+anml = animalArr[get_animal_index(animalCode)];
+        console.log(getAnimalByCode());
+    }
+    else if(menu==2){
+        animal_search = prompt(`Enter the name of the animal
+        you want to search for:`);
+        console.log(search_animals());
+    }
+    else if(menu==3){
+        new_animal = prompt('enter the name of the animal you want to add');
+        new_animal_code = prompt('enter the code of the animal you want to add');
+        add_new_animal()
+    }
+    else if(menu==4){
+        code_to_delete = prompt('enter the code of the animal you want to delete')
+        delete_animal()
+    }
+    else{
+        alert("ERROR ");
+    }
+    animalArr = animalArr.map(element => {
+        return element.toLowerCase().trim();
+    })
+    menu = prompt(`Welcome to the zoo's database,
+Please select an option:
+[1]-Animal Search by code
+[2]-Animal search by name
+[3]-add new animal to the database
+[4]-delete animal from database
+[5]-exit`)
+}
+alert('good bye');
